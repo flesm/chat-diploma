@@ -35,6 +35,7 @@ class CurrentUser(BaseModel):
 
 
 class AttachmentPayload(BaseModel):
+    file_id: str
     file_name: str
     mime_type: str | None = None
     size: int | None = None
@@ -368,10 +369,11 @@ async def send_message(
         "attachments": [
             {
                 "id": str(ObjectId()),
+                "file_id": attachment.file_id,
                 "file_name": attachment.file_name,
                 "mime_type": attachment.mime_type,
                 "size": attachment.size,
-                "status": "pending_upload",
+                "status": "uploaded",
             }
             for attachment in payload.attachments
         ],
